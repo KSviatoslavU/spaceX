@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@mantine/core": "^8.2.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "saas": "^1.0.0"
