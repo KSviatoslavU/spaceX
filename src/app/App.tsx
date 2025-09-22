@@ -1,9 +1,10 @@
 import { SimpleGrid } from "@mantine/core";
 import { useEffect, useReducer } from "react";
-import type { State, Action } from "../types";
-import { LaunchesContext } from "../context";
-import Modal from "../components/Modal";
-import { CardLaunch } from "../components/Card/CardLaunch";
+import type { State, Action } from "../types/types";
+import { LaunchesContext } from "../context/LaunchesContext";
+import Modal from "../components/Modal/Modal";
+import "./App.scss";
+import { CardLaunch } from "../components/CardLaunch/CardLaunch";
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -16,6 +17,8 @@ function reducer(state: State, action: Action): State {
     case "open_modal":
       return { ...state, isModalOpen: action.payload };
 
+    case "load_error":
+      return { ...state, loadError: action.payload };
     default: {
       return state;
     }
@@ -50,8 +53,10 @@ function App() {
         }
       } catch (e) {
         if (e instanceof Error) {
+          dispatch({ type: "load_error", payload: e.message });
           console.log(`Ошибка : ${e.message}`);
         } else {
+          dispatch({ type: "load_error", payload: "Неизвестная ошибка" });
           console.log("Неизвестная ошибка:");
         }
       }
@@ -67,8 +72,9 @@ function App() {
   return (
     <>
       <LaunchesContext.Provider value={{ state, dispatch }}>
-        {state.isModalOpen && <Modal></Modal>}
+        {state.isModalOpen && <Modal />}
         <h1> SpaceX Launches 2020</h1>
+        {state.loadError && <div className="load-error">{state.loadError}</div>}
         <SimpleGrid cols={3} spacing="lg" maw={960} mx="auto" mt="xl">
           {state.launches.map((launch) => (
             <CardLaunch key={launch.mission_name} launch={launch}></CardLaunch>

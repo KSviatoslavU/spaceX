@@ -12,6 +12,7 @@ export type State = {
   launches: Launch[];
   activeLaunch: Launch | null;
   isModalOpen: boolean;
+  loadError?: null | string;
 };
 
 export type Action =
@@ -20,4 +21,9 @@ export type Action =
       payload: Launch[];
     }
   | { type: "active_launch"; payload: Launch }
-  | { type: "open_modal"; payload: boolean };
+  | { type: "open_modal"; payload: boolean }
+  | { type: "load_error"; payload: null | string };
+
+export type CardLaunchProps = {
+  launch: Launch;
+};

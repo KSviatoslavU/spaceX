@@ -1,10 +1,6 @@
 import { Card, Image, Text, Flex, Button } from "@mantine/core";
-import type { Launch } from "../../types";
-import { useLaunchesContext } from "../../context";
-
-type CardLaunchProps = {
-  launch: Launch;
-};
+import type { CardLaunchProps, Launch } from "../../types/types";
+import { useLaunchesContext } from "../../context/LaunchesContext";
 
 export function CardLaunch({ launch }: CardLaunchProps) {
   const { dispatch } = useLaunchesContext();
@@ -24,7 +20,10 @@ export function CardLaunch({ launch }: CardLaunchProps) {
           <Card.Section pt="md">
             <Image
               mt="xl"
-              src={launch.links?.mission_patch_small}
+              src={
+                launch.links?.mission_patch_small ||
+                "https://www.dgl.ru/wp-content/uploads/2022/06/spacex-zeichen-640x360.jpg"
+              }
               alt={launch.mission_name}
               height={100}
               fit="contain"

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { State, Action } from "./types";
+import type { State, Action } from "../types/types";
 
 type LaunchesContextType = {
   state: State;
